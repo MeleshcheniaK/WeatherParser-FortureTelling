@@ -12,9 +12,11 @@ def current_forecast(city_name):
         current_weather = 'Такого города не существует'
     else:
         current_weather = f"{data['weather'][0]['description'].capitalize()}\n" \
-                          f"Текущая температура: {round(data['main']['temp'])}, ощущается как {round(data['main']['feels_like'])}\n" \
+                          f"Текущая температура: {round(data['main']['temp'])}, 
+                            ощущается как {round(data['main']['feels_like'])}\n" \
                           f"Колебание от {data['main']['temp_min']} до {data['main']['temp_max']}\n" \
-                          f"Рассвет - {datetime.utcfromtimestamp(data['sys']['sunrise']).strftime('%Y-%m-%d %H:%M:%S')[11:16]}," \
+                          f"Рассвет - 
+                            {datetime.utcfromtimestamp(data['sys']['sunrise']).strftime('%Y-%m-%d %H:%M:%S')[11:16]}," \
                           f" закат - {datetime.utcfromtimestamp(data['sys']['sunset']).strftime('%Y-%m-%d %H:%M:%S')[11:16]}"
 
     return current_weather
