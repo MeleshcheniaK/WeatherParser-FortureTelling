@@ -38,7 +38,7 @@ def updating_main_markup(message):
 def welcome(message):
     markup = updating_main_markup(message)
 
-        bot.send_message(message.chat.id,
+    bot.send_message(message.chat.id,
                      'Добро пожаловать, {0.first_name}!\n Я - <b>{1.first_name}</b>, '
                      'бот созданный чтобы рассказывать вам о погоде и не только).'.format(
                          message.from_user, bot.get_me()),
