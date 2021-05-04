@@ -1,0 +1,4 @@
+APPID = "9293be28c948ca37fa0758f4027419fe"
+TOKEN = '1728312997:AAH8EXGILjzPNV3rwHex-8EfLY6hggncUdc'
+CITY_ENTER = 0
+URL = 'https://8-gund.com/ru/'
