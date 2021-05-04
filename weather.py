@@ -3,7 +3,7 @@ import requests
 
 from datetime import datetime
 
-
+# Получение прогноза "На сегодня"
 def current_forecast(city_name):
     res = requests.get('http://api.openweathermap.org/data/2.5/weather',
                        params={'q': city_name, 'units': 'metric', 'lang': 'ru', 'APPID': globals.APPID})
@@ -21,7 +21,7 @@ def current_forecast(city_name):
 
     return current_weather
 
-
+# Получение прогноза "На 5 дней"
 def future_forecast(city_name):
     res = requests.get('http://api.openweathermap.org/data/2.5/forecast',
                        params={'q': city_name, 'units': 'metric', 'lang': 'ru', 'APPID': globals.APPID})
