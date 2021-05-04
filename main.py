@@ -39,7 +39,8 @@ def welcome(message):
     markup = updating_main_markup(message)
 
     bot.send_message(message.chat.id,
-                     'Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы рассказывать вам о погоде и не только).'.format(
+                     'Добро пожаловать, {0.first_name}!\n
+                     Я - <b>{1.first_name}</b>, бот созданный чтобы рассказывать вам о погоде и не только).'.format(
                          message.from_user, bot.get_me()),
                      parse_mode='html', reply_markup=markup)
 
@@ -77,17 +78,17 @@ def processing(message):
         # При выборе функции "Узнать погоду"
         markup = updating_main_markup(message)
         bot.send_message(message.chat.id,
-                         'Теперь выберите режим'.format(message.from_user),
+                         'Теперь выберите режим'.format(),
                          parse_mode='html', reply_markup=markup)
     elif message.text == 'На сегодня':
         # При выборе функции "На сегодня"
         bot.send_message(message.chat.id,
-                         'Введите название города'.format(message.from_user))
+                         'Введите название города'.format())
         globals.CITY_ENTER = 1
     elif message.text == 'На 5 дней':
         # При выборе функции "На 5 дней"
         bot.send_message(message.chat.id,
-                         'Введите название города'.format(message.from_user))
+                         'Введите название города'.format())
         globals.CITY_ENTER = 2
     elif message.text[-1] == '?':
         # При вводе вопросе
