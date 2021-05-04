@@ -1,11 +1,12 @@
-import telebot
-from telebot import types
-
-import fortune
-import weather
 import codecs
+import fortune
 import globals
 import shelve
+import telebot
+import weather
+
+from telebot import types
+
 
 # Ссылка на бота
 bot = telebot.TeleBot(globals.TOKEN)
