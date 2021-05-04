@@ -44,6 +44,7 @@ def welcome(message):
                          message.from_user, bot.get_me()),
                      parse_mode='html', reply_markup=markup)
 
+
 # Действия при любом другом сообщении
 @bot.message_handler(content_types=['text'])
 def processing(message):
