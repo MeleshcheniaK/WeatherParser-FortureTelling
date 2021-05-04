@@ -14,6 +14,7 @@ bot = telebot.TeleBot(globals.TOKEN)
 # База данных пользователей
 users = shelve.open('users')
 
+
 # Замена кнопок
 def updating_main_markup(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -31,6 +32,7 @@ def updating_main_markup(message):
 
     return markup
 
+
 # Действия при /start
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -40,6 +42,7 @@ def welcome(message):
                      'Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот созданный чтобы рассказывать вам о погоде и не только).'.format(
                          message.from_user, bot.get_me()),
                      parse_mode='html', reply_markup=markup)
+
 
 # Действия при любом другом сообщении
 @bot.message_handler(content_types=['text'])
@@ -101,6 +104,7 @@ def processing(message):
 
     # Обновление базы данных
     users.sync()
+
 
 # Запуск бота
 bot.polling(none_stop=True)
