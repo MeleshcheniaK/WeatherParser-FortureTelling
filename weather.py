@@ -3,6 +3,7 @@ import requests
 
 from datetime import datetime
 
+
 # Получение прогноза "На сегодня"
 def current_forecast(city_name):
     res = requests.get('http://api.openweathermap.org/data/2.5/weather',
