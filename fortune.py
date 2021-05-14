@@ -1,5 +1,4 @@
 import globals
-import requests
 import time
 from selenium import webdriver
 
@@ -12,6 +11,7 @@ driver = webdriver.Chrome(r'D:\Informatic\Python\Bot/chromedriver', chrome_optio
 def get_html(url):
     r = requests.get(url)
     return r
+
 
 # Получение ответа от шара
 def get_answer():
