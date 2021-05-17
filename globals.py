@@ -1,5 +1,8 @@
+from decouple import config
+
 # Appid для сайта с прогнозом погоды
-APPID = "*"
+APPID = config('APPID')
+
 # Token для TelegramBot
 TOKEN = '*'
 # Начальное состояние конечного автомата

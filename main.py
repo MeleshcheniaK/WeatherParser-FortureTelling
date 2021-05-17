@@ -60,6 +60,11 @@ def processing(message):
         globals.CITY_ENTER = 0
         markup = updating_main_markup(message)
         bot.send_message(message.chat.id, "Я снова готов к работе)", parse_mode='html', reply_markup=markup)
+    elif message.text == '/help':
+        bot.send_message(message.chat.id, 'Если хотите узнать ответ, задайте вопрос,\n'
+                                          'если хотите подписаться, напишите Подписаться,\n'
+                                          'если хотите отписаться, напишите Отписаться,\n'
+                                          'если хотите узнать погоду, напишите Узнать погоду.')
     elif message.text == 'Подписаться':
         # При выборе функции "Подписаться"
         users.dict[str(message.chat.id)] = ''
