@@ -6,7 +6,7 @@ import telebot
 import weather
 
 from telebot import types
-
+import calculator
 
 # Ссылка на бота
 bot = telebot.TeleBot(globals.TOKEN)
@@ -21,16 +21,23 @@ def updating_main_markup(message):
     if message.text == 'Узнать погоду':
         item1 = types.InlineKeyboardButton('На сегодня', callback_data='today')
         item2 = types.InlineKeyboardButton('На 5 дней', callback_data='5days')
+
+        markup.add(item1, item2)
     else:
         item1 = types.KeyboardButton('Узнать погоду')
         if str(message.chat.id) in users.dict:
             item2 = types.KeyboardButton('Отписаться')
         else:
             item2 = types.KeyboardButton('Подписаться')
+        item3 = types.KeyboardButton('Калькулятор')
 
-    markup.add(item1, item2)
+        markup.add(item1, item2, item3)
 
     return markup
+
+# Вывод подсчётов
+def print_alco(message):
+    bot.send_message(message.chat.id, calculator.calculate_alco(message))
 
 
 # Действия при /start
@@ -45,26 +52,34 @@ def welcome(message):
                      parse_mode='html', reply_markup=markup)
 
 
+@bot.message_handler(commands=['help'])
+def processing(message):
+    bot.send_message(message.chat.id, 'Если хотите узнать ответ, задайте вопрос,\n'
+                                      'если хотите посчитать сколько выпить, напишите Калькулятор,\n'
+                                      'если хотите подписаться, напишите Подписаться,\n'
+                                      'если хотите отписаться, напишите Отписаться,\n'
+                                      'если хотите узнать погоду, напишите Узнать погоду.')
+
+
 # Действия при любом другом сообщении
 @bot.message_handler(content_types=['text'])
 def processing(message):
-    if globals.CITY_ENTER == 1:
+    if globals.STATE == 1:
         # При вводе названия города для режима "На сегодня"
         bot.send_message(message.chat.id, weather.current_forecast(message.text))
-        globals.CITY_ENTER = 0
+        globals.STATE = 0
         markup = updating_main_markup(message)
         bot.send_message(message.chat.id, "Я снова готов к работе)", parse_mode='html', reply_markup=markup)
-    elif globals.CITY_ENTER == 2:
+    elif globals.STATE == 2:
         # При вводе названия города для режима "На 5 дней"
         bot.send_message(message.chat.id, weather.future_forecast(message.text))
-        globals.CITY_ENTER = 0
+        globals.STATE = 0
         markup = updating_main_markup(message)
         bot.send_message(message.chat.id, "Я снова готов к работе)", parse_mode='html', reply_markup=markup)
-    elif message.text == '/help':
-        bot.send_message(message.chat.id, 'Если хотите узнать ответ, задайте вопрос,\n'
-                                          'если хотите подписаться, напишите Подписаться,\n'
-                                          'если хотите отписаться, напишите Отписаться,\n'
-                                          'если хотите узнать погоду, напишите Узнать погоду.')
+    elif message.text == 'Калькулятор':
+        # Вызов калькулятора опьянения
+        bot.send_message(message.chat.id, "Введите пол(м/ж), вес, рост, градус и мл(цифрами и через пробелы)")
+        bot.register_next_step_handler(message, print_alco)
     elif message.text == 'Подписаться':
         # При выборе функции "Подписаться"
         users.dict[str(message.chat.id)] = ''
@@ -89,12 +104,12 @@ def processing(message):
         # При выборе функции "На сегодня"
         bot.send_message(message.chat.id,
                          'Введите название города'.format())
-        globals.CITY_ENTER = 1
+        globals.STATE = 1
     elif message.text == 'На 5 дней':
         # При выборе функции "На 5 дней"
         bot.send_message(message.chat.id,
                          'Введите название города'.format())
-        globals.CITY_ENTER = 2
+        globals.STATE = 2
     elif message.text[-1] == '?':
         # При вводе вопросе
         answer = fortune.get_answer()

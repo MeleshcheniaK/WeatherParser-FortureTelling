@@ -8,10 +8,16 @@ TOKEN = '*'
 # Начальное состояние конечного автомата
 CITY_ENTER = 0
 # Ссылка на сайт с пресказаниями
+STATE = 0
+
+# Ссылка на сайт с предсказаниями
 URL = 'https://8-gund.com/ru/'
 
 # Ссылка на сайт с прогнозом погоды
 WEATHER_SITE = 'http://api.openweathermap.org/data/2.5/'
+
+# Ссылка на сайт с калькулятором
+HREF = "https://alcofan.com/wp-admin/admin-ajax.php"
 
 # Код ошибки
 ERROR_CODE = '404'
