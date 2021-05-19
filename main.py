@@ -45,6 +45,21 @@ def print_alco(message):
     bot.send_message(message.chat.id, calculator.calculate_alco(message))
 
 
+# При вводе названия города для режима "На сегодня"
+def print_today(message):
+    bot.send_message(message.chat.id, weather.current_forecast(message.text))
+    markup = updating_main_markup(message)
+    bot.send_message(message.chat.id, "Я снова готов к работе)", parse_mode='html', reply_markup=markup)
+
+
+# При вводе названия города для режима "На 5 дней"
+def print_forecast(message):
+    bot.send_message(message.chat.id, weather.future_forecast(message.text))
+    globals.STATE = 0
+    markup = updating_main_markup(message)
+    bot.send_message(message.chat.id, "Я снова готов к работе)", parse_mode='html', reply_markup=markup)
+
+
 # Действия при /start
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -76,19 +91,7 @@ def random_pos(message):
 # Действия при любом другом сообщении
 @bot.message_handler(content_types=['text'])
 def processing(message):
-    if globals.STATE == 1:
-        # При вводе названия города для режима "На сегодня"
-        bot.send_message(message.chat.id, weather.current_forecast(message.text))
-        globals.STATE = 0
-        markup = updating_main_markup(message)
-        bot.send_message(message.chat.id, "Я снова готов к работе)", parse_mode='html', reply_markup=markup)
-    elif globals.STATE == 2:
-        # При вводе названия города для режима "На 5 дней"
-        bot.send_message(message.chat.id, weather.future_forecast(message.text))
-        globals.STATE = 0
-        markup = updating_main_markup(message)
-        bot.send_message(message.chat.id, "Я снова готов к работе)", parse_mode='html', reply_markup=markup)
-    elif message.text == 'Калькулятор':
+    if message.text == 'Калькулятор':
         # Вызов калькулятора опьянения
         bot.send_message(message.chat.id, "Введите пол(м/ж), вес, рост, градус и мл(цифрами и через пробелы)")
         bot.register_next_step_handler(message, print_alco)
@@ -115,13 +118,14 @@ def processing(message):
     elif message.text == 'На сегодня':
         # При выборе функции "На сегодня"
         bot.send_message(message.chat.id,
-                         'Введите название города'.format())
-        globals.STATE = 1
+                         'Введите название города')
+        bot.register_next_step_handler(message, print_today)
+
     elif message.text == 'На 5 дней':
         # При выборе функции "На 5 дней"
         bot.send_message(message.chat.id,
                          'Введите название города'.format())
-        globals.STATE = 2
+        bot.register_next_step_handler(message, print_forecast)
     elif message.text[-1] == '?':
         # При вводе вопросе
         answer = fortune.get_answer()
