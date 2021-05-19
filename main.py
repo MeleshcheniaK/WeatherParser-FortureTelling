@@ -58,7 +58,7 @@ def welcome(message):
 
 
 @bot.message_handler(commands=['help'])
-def processing(message):
+def help(message):
     bot.send_message(message.chat.id, 'Если хотите узнать ответ, задайте вопрос,\n'
                                       'если хотите посчитать сколько выпить, напишите Калькулятор,\n'
                                       'если хотите подписаться, напишите Подписаться,\n'
