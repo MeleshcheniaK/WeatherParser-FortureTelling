@@ -2,6 +2,10 @@ import codecs
 import fortune
 import globals
 import shelve
+import random
+import shelve
+
+import requests
 import telebot
 import weather
 
@@ -35,6 +39,7 @@ def updating_main_markup(message):
 
     return markup
 
+
 # Вывод подсчётов
 def print_alco(message):
     bot.send_message(message.chat.id, calculator.calculate_alco(message))
@@ -59,6 +64,12 @@ def processing(message):
                                       'если хотите подписаться, напишите Подписаться,\n'
                                       'если хотите отписаться, напишите Отписаться,\n'
                                       'если хотите узнать погоду, напишите Узнать погоду.')
+
+# Тайная функция)
+@bot.message_handler(commands=['secret'])
+def random_pos(message):
+    data = requests.get("https://castlots.org/img/kamasutra/" + str(random.randint(0, 100)) + ".jpg")
+    bot.send_photo(message.chat.id, data.content)
 
 
 # Действия при любом другом сообщении
