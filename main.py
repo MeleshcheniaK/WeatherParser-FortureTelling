@@ -65,6 +65,7 @@ def help(message):
                                       'если хотите отписаться, напишите Отписаться,\n'
                                       'если хотите узнать погоду, напишите Узнать погоду.')
 
+
 # Тайная функция)
 @bot.message_handler(commands=['secret'])
 def random_pos(message):
