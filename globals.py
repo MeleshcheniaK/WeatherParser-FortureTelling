@@ -3,12 +3,11 @@ from decouple import config
 # Appid для сайта с прогнозом погоды
 APPID = config('APPID')
 
-# Token для TelegramBot
-TOKEN = '*'
 # Начальное состояние конечного автомата
 CITY_ENTER = 0
-# Ссылка на сайт с пресказаниями
-STATE = 0
+
+# Token для TelegramBot
+TOKEN = config('TOKEN')
 
 # Ссылка на сайт с предсказаниями
 URL = 'https://8-gund.com/ru/'
