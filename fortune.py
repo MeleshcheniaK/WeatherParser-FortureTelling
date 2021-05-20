@@ -11,6 +11,7 @@ options.add_argument('headless')
 driver = webdriver.Chrome(f'{os.path.dirname(os.path.abspath(__file__))}/ChromeDriver/chromedriver',
                           chrome_options=options)
 
+
 # Получение ответа от шара
 def get_orb_answer():
     driver.get(globals.URL)
