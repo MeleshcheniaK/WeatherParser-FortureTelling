@@ -16,7 +16,7 @@ def calculate_alco(data):
     params = {'action': 'drink_count', 'nonce': '2bc79bc186',
               'data': f"gender={gender_calc[gender]}&weight={weight}&height={height}&drink1={degree}"
                       f"&amount1={ml}&drink2=0&amount2=0&drink3=0&amount3=0&gstr=3", 'dataType': 'json'}
-
+                      
     response = requests.post(globals.HREF, data=params,
                              headers={'Host': 'alcofan.com', 'User-Agent': config('User-Agent')})
     result = f"В выдыхаемом воздухе -- {json.loads(response.text)[1]} мг/л\n" \
