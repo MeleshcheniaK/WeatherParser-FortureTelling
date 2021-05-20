@@ -1,16 +1,15 @@
 import codecs
-import fortune
-import globals
-import shelve
 import random
 import shelve
 
 import requests
 import telebot
-import weather
-
 from telebot import types
+
 import calculator
+import fortune
+import globals
+import weather
 
 # Ссылка на бота
 bot = telebot.TeleBot(globals.TOKEN)
@@ -46,18 +45,19 @@ def print_alco(message):
     bot.send_message(message.chat.id, calculator.calculate_alco(message))
 
 
-# При вводе названия города для режима 'На сегодня'
+# При вводе названия города для режима "На сегодня"
 def print_today(message):
     bot.send_message(message.chat.id, weather.current_forecast(message.text))
     markup = updating_main_markup(message)
-    bot.send_message(message.chat.id, 'Я снова готов к работе)', parse_mode='html', reply_markup=markup)
+    bot.send_message(message.chat.id, "Я снова готов к работе)", parse_mode='html', reply_markup=markup)
 
 
-# При вводе названия города для режима 'На 5 дней'
+# При вводе названия города для режима "На 5 дней"
 def print_forecast(message):
     bot.send_message(message.chat.id, weather.future_forecast(message.text))
+    globals.STATE = 0
     markup = updating_main_markup(message)
-    bot.send_message(message.chat.id, 'Я снова готов к работе)', parse_mode='html', reply_markup=markup)
+    bot.send_message(message.chat.id, "Я снова готов к работе)", parse_mode='html', reply_markup=markup)
 
 
 # Действия при /start

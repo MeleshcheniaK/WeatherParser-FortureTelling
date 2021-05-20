@@ -1,5 +1,7 @@
 import unittest
+
 import weather
+
 
 class TestBotMethods(unittest.TestCase):
     def test_weather_future_forecast(self):

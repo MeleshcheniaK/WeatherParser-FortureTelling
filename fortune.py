@@ -21,4 +21,3 @@ def get_orb_answer():
     time.sleep(1)
     element = driver.find_element_by_class_name('ball-text').text
     return element
-
