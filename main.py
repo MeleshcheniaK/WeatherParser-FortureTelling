@@ -23,19 +23,20 @@ users = shelve.open('users')
 def updating_main_markup(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     if message.text == 'Узнать погоду':
-        item1 = types.InlineKeyboardButton('На сегодня', callback_data='today')
-        item2 = types.InlineKeyboardButton('На 5 дней', callback_data='5days')
+        button_1 = types.InlineKeyboardButton('На сегодня', callback_data='today')
+        button_2 = types.InlineKeyboardButton('На 5 дней', callback_data='5days')
 
-        markup.add(item1, item2)
+        markup.add(button_1, button_2)
     else:
-        item1 = types.KeyboardButton('Узнать погоду')
-        if str(message.chat.id) in users.dict:
-            item2 = types.KeyboardButton('Отписаться')
-        else:
-            item2 = types.KeyboardButton('Подписаться')
-        item3 = types.KeyboardButton('Калькулятор')
+        button_1 = types.KeyboardButton('Узнать погоду')
+        button_2 = types.KeyboardButton('Подписаться')
 
-        markup.add(item1, item2, item3)
+        if str(message.chat.id) in users.dict:
+            button_2 = types.KeyboardButton('Отписаться')
+
+        button_3 = types.KeyboardButton('Калькулятор')
+
+        markup.add(button_1, button_2, button_3)
 
     return markup
 
@@ -45,19 +46,18 @@ def print_alco(message):
     bot.send_message(message.chat.id, calculator.calculate_alco(message))
 
 
-# При вводе названия города для режима "На сегодня"
+# При вводе названия города для режима 'На сегодня'
 def print_today(message):
     bot.send_message(message.chat.id, weather.current_forecast(message.text))
     markup = updating_main_markup(message)
-    bot.send_message(message.chat.id, "Я снова готов к работе)", parse_mode='html', reply_markup=markup)
+    bot.send_message(message.chat.id, 'Я снова готов к работе)', parse_mode='html', reply_markup=markup)
 
 
-# При вводе названия города для режима "На 5 дней"
+# При вводе названия города для режима 'На 5 дней'
 def print_forecast(message):
     bot.send_message(message.chat.id, weather.future_forecast(message.text))
-    globals.STATE = 0
     markup = updating_main_markup(message)
-    bot.send_message(message.chat.id, "Я снова готов к работе)", parse_mode='html', reply_markup=markup)
+    bot.send_message(message.chat.id, 'Я снова готов к работе)', parse_mode='html', reply_markup=markup)
 
 
 # Действия при /start
@@ -84,7 +84,7 @@ def help(message):
 # Тайная функция)
 @bot.message_handler(commands=['secret'])
 def random_pos(message):
-    data = requests.get("https://castlots.org/img/kamasutra/" + str(random.randint(0, 100)) + ".jpg")
+    data = requests.get(f"{globals.PICTURES}{random.randint(0, 100)}.jpg")
     bot.send_photo(message.chat.id, data.content)
 
 
@@ -93,46 +93,45 @@ def random_pos(message):
 def processing(message):
     if message.text == 'Калькулятор':
         # Вызов калькулятора опьянения
-        bot.send_message(message.chat.id, "Введите пол(м/ж), вес, рост, градус и мл(цифрами и через пробелы)")
+        bot.send_message(message.chat.id, 'Введите пол(м/ж), вес, рост, градус и мл(цифрами и через пробелы)')
         bot.register_next_step_handler(message, print_alco)
     elif message.text == 'Подписаться':
-        # При выборе функции "Подписаться"
+        # При выборе функции 'Подписаться'
         users.dict[str(message.chat.id)] = ''
         markup = updating_main_markup(message)
         bot.send_message(message.chat.id,
                          'Теперь вы подписаны, {0.first_name})'.format(message.from_user),
                          parse_mode='html', reply_markup=markup)
     elif message.text == 'Отписаться':
-        # При выборе функции "Отписаться"
+        # При выборе функции 'Отписаться'
         del users[str(message.chat.id)]
         markup = updating_main_markup(message)
         bot.send_message(message.chat.id,
                          'Возвращайтесь поскорей, {0.first_name})'.format(message.from_user),
                          parse_mode='html', reply_markup=markup)
     elif message.text == 'Узнать погоду':
-        # При выборе функции "Узнать погоду"
+        # При выборе функции 'Узнать погоду'
         markup = updating_main_markup(message)
         bot.send_message(message.chat.id,
                          'Теперь выберите режим'.format(),
                          parse_mode='html', reply_markup=markup)
     elif message.text == 'На сегодня':
-        # При выборе функции "На сегодня"
+        # При выборе функции 'На сегодня'
         bot.send_message(message.chat.id,
                          'Введите название города')
         bot.register_next_step_handler(message, print_today)
 
     elif message.text == 'На 5 дней':
-        # При выборе функции "На 5 дней"
+        # При выборе функции 'На 5 дней'
         bot.send_message(message.chat.id,
                          'Введите название города'.format())
         bot.register_next_step_handler(message, print_forecast)
     elif message.text[-1] == '?':
         # При вводе вопросе
-        answer = fortune.get_answer()
+        answer = fortune.get_orb_answer()
         if str(message.chat.id) in users:
             user_info = codecs.decode(users.dict[str(message.chat.id)], 'UTF-8')
-            user_info += f"{message.text}\n{answer}\n"
-            print(user_info)
+            user_info += f'{message.text}\n{answer}\n'
             users.dict[str(message.chat.id)] = user_info
         bot.send_message(message.chat.id, answer)
     else:

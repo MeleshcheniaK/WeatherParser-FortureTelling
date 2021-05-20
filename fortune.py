@@ -4,17 +4,12 @@ from selenium import webdriver
 
 # Подключение веб-браузера
 options = webdriver.ChromeOptions()
-options.add_argument("headless")
-driver = webdriver.Chrome(r'D:\Informatic\Python\Bot/chromedriver', chrome_options=options)
-
-# Обработка ссылки
-def get_html(url):
-    r = requests.get(url)
-    return r
-
+options.add_argument('headless')
+driver = webdriver.Chrome(f'{os.path.dirname(os.path.abspath(__file__))}/ChromeDriver/chromedriver',
+                          chrome_options=options)
 
 # Получение ответа от шара
-def get_answer():
+def get_orb_answer():
     driver.get(globals.URL)
     time.sleep(1)
     element = driver.find_element_by_class_name('ball-text')

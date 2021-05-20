@@ -16,10 +16,13 @@ URL = 'https://8-gund.com/ru/'
 WEATHER_SITE = 'http://api.openweathermap.org/data/2.5/'
 
 # Ссылка на сайт с калькулятором
-HREF = "https://alcofan.com/wp-admin/admin-ajax.php"
+HREF = 'https://alcofan.com/wp-admin/admin-ajax.php'
+
+# Ссылка на сайт с картинками
+PICTURES = 'https://castlots.org/img/kamasutra/'
 
 # Код ошибки
-ERROR_CODE = '404'
+NOT_FOUND = '404'
 
 # Начало нового дня
 START_TIME = '00:00'
@@ -31,3 +34,6 @@ DATE_SIZE = 10
 
 # Формат получения даты
 DATA_FORMAT = '%Y-%m-%d %H:%M:%S'
+
+# Размер данных для калькулятора
+INFO_SIZE = 5
