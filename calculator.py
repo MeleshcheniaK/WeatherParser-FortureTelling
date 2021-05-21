@@ -27,7 +27,7 @@ def calculate_alco(data):
     if int(degree) < 0 or int(degree) > 100:
         return 'Неправильный градус'
 
-    params = {'action': 'drink_count', 'nonce': 'bf9b9cc3a3',
+    params = {'action': 'drink_count', 'nonce': config('nonce'),
               'data': f"gender={gender_coefficient[gender]}&weight={weight}&height={height}&drink1={degree}"
                       f"&amount1={ml}&drink2=0&amount2=0&drink3=0&amount3=0&gstr=3", 'dataType': 'json'}
 
