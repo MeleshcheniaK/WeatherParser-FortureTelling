@@ -16,8 +16,12 @@ driver = webdriver.Chrome(f'{os.path.dirname(os.path.abspath(__file__))}/ChromeD
 def get_orb_answer():
     driver.get(globals.URL)
     time.sleep(1)
-    element = driver.find_element_by_class_name('ball-text')
-    element.click()
+    # Поиск элемента
+    orb_element_on_website = driver.find_element_by_class_name('ball-text')
+    # Клик по нему
+    orb_element_on_website.click()
     time.sleep(1)
-    element = driver.find_element_by_class_name('ball-text').text
-    return element
+    # Получение обновленного элемента
+    orb_element_on_website = driver.find_element_by_class_name('ball-text').text
+
+    return orb_element_on_website

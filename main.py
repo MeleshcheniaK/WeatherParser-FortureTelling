@@ -21,18 +21,21 @@ users = shelve.open('users')
 # Замена кнопок
 def updating_main_markup(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    # Если выбрана функция 'Узнать погоду'
     if message.text == 'Узнать погоду':
         button_1 = types.InlineKeyboardButton('На сегодня', callback_data='today')
         button_2 = types.InlineKeyboardButton('На 5 дней', callback_data='5days')
 
         markup.add(button_1, button_2)
     else:
+        # Главное меню
         button_1 = types.KeyboardButton('Узнать погоду')
-        button_2 = types.KeyboardButton('Подписаться')
+        button_2_text = 'Подписаться'
 
         if str(message.chat.id) in users.dict:
-            button_2 = types.KeyboardButton('Отписаться')
+            button_2_text = 'Отписаться'
 
+        button_2 = types.KeyboardButton(button_2_text)
         button_3 = types.KeyboardButton('Калькулятор')
 
         markup.add(button_1, button_2, button_3)
@@ -71,6 +74,7 @@ def welcome(message):
                      parse_mode='html', reply_markup=markup)
 
 
+# Действия при /help
 @bot.message_handler(commands=['help'])
 def help(message):
     bot.send_message(message.chat.id, 'Если хотите узнать ответ, задайте вопрос,\n'
@@ -95,14 +99,14 @@ def processing(message):
         bot.send_message(message.chat.id, 'Введите пол(м/ж), вес, рост, градус и мл(цифрами и через пробелы)')
         bot.register_next_step_handler(message, print_alco)
     elif message.text == 'Подписаться':
-        # При выборе функции 'Подписаться'
+        # При выборе функции 'Подписаться' добавляем пользователя в базу данных
         users.dict[str(message.chat.id)] = ''
         markup = updating_main_markup(message)
         bot.send_message(message.chat.id,
                          'Теперь вы подписаны, {0.first_name})'.format(message.from_user),
                          parse_mode='html', reply_markup=markup)
     elif message.text == 'Отписаться':
-        # При выборе функции 'Отписаться'
+        # При выборе функции 'Отписаться' удаляем пользователя из базы данных
         del users[str(message.chat.id)]
         markup = updating_main_markup(message)
         bot.send_message(message.chat.id,
@@ -126,7 +130,7 @@ def processing(message):
                          'Введите название города'.format())
         bot.register_next_step_handler(message, print_forecast)
     elif message.text[-1] == '?':
-        # При вводе вопросе
+        # При вводе вопроса
         answer = fortune.get_orb_answer()
         if str(message.chat.id) in users:
             user_info = codecs.decode(users.dict[str(message.chat.id)], 'UTF-8')
