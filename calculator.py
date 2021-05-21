@@ -20,11 +20,11 @@ def calculate_alco(data):
     gender, weight, height, degree, ml = info
     if gender not in gender_coefficient:
         return 'Неправильный пол'
-    if int(weight) < 40 or int(weight) > 150:
+    if not weight.isdigit() or int(weight) < 40 or int(weight) > 150:
         return 'Неправильный вес'
-    if int(height) < 120 or int(height) > 200:
+    if not height.isdigit() or int(height) < 120 or int(height) > 200:
         return 'Неправильный рост'
-    if int(degree) < 0 or int(degree) > 100:
+    if not degree.isdigit() or int(degree) < 0 or int(degree) > 100:
         return 'Неправильный градус'
 
     params = {'action': 'drink_count', 'nonce': config('nonce'),
