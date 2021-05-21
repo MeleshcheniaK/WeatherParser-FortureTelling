@@ -37,3 +37,6 @@ DATA_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 # Размер данных для калькулятора
 INFO_SIZE = 5
+
+# Код ошибки доступа
+SECURITY_ERROR = 200

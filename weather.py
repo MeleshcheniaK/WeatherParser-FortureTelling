@@ -37,9 +37,9 @@ def future_forecast(city_name):
     else:
         # Вывод части данных в качестве прогноза
         for single_hour_forecast in data['list']:
-            if (single_hour_forecast['dt_txt'])[11:16] == '00:00':
-                forecast += f"{(single_hour_forecast['dt_txt'])[0:10]}:\n"
-            forecast += f"\t{(single_hour_forecast['dt_txt'])[11:16]}" \
+            if (single_hour_forecast['dt_txt'])[globals.START_PATTERN:globals.END_PATTERN] == '00:00':
+                forecast += f"{(single_hour_forecast['dt_txt'])[:globals.DATE_SIZE]}:\n"
+            forecast += f"\t{(single_hour_forecast['dt_txt'])[globals.START_PATTERN:globals.END_PATTERN]}" \
                         f" {'{0:+3.0f}'.format(single_hour_forecast['main']['temp'])}" \
                         f" {single_hour_forecast['weather'][0]['description']}\n"
 
