@@ -18,7 +18,6 @@ bot = telebot.TeleBot(globals.TOKEN)
 users = shelve.open('users')
 
 
-
 def updating_main_markup(message):
     """
     Замена кнопок
