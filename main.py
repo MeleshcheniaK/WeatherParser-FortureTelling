@@ -129,7 +129,7 @@ def processing(message):
         bot.register_next_step_handler(message, print_alco)
     elif message.text == 'Подписаться':
         # При выборе функции 'Подписаться' добавляем пользователя в базу данных
-        users.dict[str(message.chat.id)] = ''
+        users.dict[str(message.chat.username)] = ''
         markup = updating_main_markup(message)
         bot.send_message(message.chat.id,
                          'Теперь вы подписаны, {0.first_name})'.format(message.from_user),
