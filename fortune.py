@@ -12,8 +12,11 @@ driver = webdriver.Chrome(f'{os.path.dirname(os.path.abspath(__file__))}/ChromeD
                           chrome_options=options)
 
 
-# Получение ответа от шара
 def get_orb_answer():
+    """
+    Получение ответа от шара
+    :return:
+    """
     driver.get(globals.URL)
     time.sleep(1)
     # Поиск элемента

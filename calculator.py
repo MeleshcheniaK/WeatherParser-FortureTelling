@@ -9,6 +9,11 @@ gender_coefficient = {'м': '0.7', 'ж': '0.6'}
 
 
 def calculate_alco(data):
+    """
+    Подсчет количества проммилей
+    :param data: Параметры (пол, вес, высота, градус, мл)
+    :return:
+    """
     info = data.text.split()
     if len(info) != globals.INFO_SIZE:
         return 'Неправильный ввод'
@@ -21,7 +26,7 @@ def calculate_alco(data):
                              headers={'Host': 'alcofan.com', 'User-Agent': config('User-Agent')})
 
     # Проверка на наличие ошибок
-    if response.status_code == globals.SECURITY_ERROR:
+    if response.text == globals.SECURITY_ERROR_TEXT:
         result = response.text
     else:
         result = f"В выдыхаемом воздухе -- {json.loads(response.text)[1]} мг/л\n" \

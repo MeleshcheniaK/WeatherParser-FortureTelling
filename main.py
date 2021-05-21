@@ -18,8 +18,13 @@ bot = telebot.TeleBot(globals.TOKEN)
 users = shelve.open('users')
 
 
-# Замена кнопок
+
 def updating_main_markup(message):
+    """
+    Замена кнопок
+    :param message: Сообщение с учётом которого проводится обновление
+    :return:
+    """
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     # Если выбрана функция 'Узнать погоду'
     if message.text == 'Узнать погоду':
@@ -43,28 +48,44 @@ def updating_main_markup(message):
     return markup
 
 
-# Вывод подсчётов
 def print_alco(message):
+    """
+    Вывод подсчётов
+    :param message: Данные для подсчёта
+    :return:
+    """
     bot.send_message(message.chat.id, calculator.calculate_alco(message))
 
 
-# При вводе названия города для режима 'На сегодня'
 def print_today(message):
+    """
+    При вводе названия города для режима 'На сегодня'
+    :param message: Название города
+    :return:
+    """
     bot.send_message(message.chat.id, weather.current_forecast(message.text))
     markup = updating_main_markup(message)
     bot.send_message(message.chat.id, 'Я снова готов к работе)', parse_mode='html', reply_markup=markup)
 
 
-# При вводе названия города для режима 'На 5 дней'
 def print_forecast(message):
+    """
+    При вводе названия города для режима 'На 5 дней'
+    :param message: Название города
+    :return:
+    """
     bot.send_message(message.chat.id, weather.future_forecast(message.text))
     markup = updating_main_markup(message)
     bot.send_message(message.chat.id, 'Я снова готов к работе)', parse_mode='html', reply_markup=markup)
 
 
-# Действия при /start
 @bot.message_handler(commands=['start'])
 def welcome(message):
+    """
+    Действия при /start
+    :param message: /start
+    :return:
+    """
     markup = updating_main_markup(message)
 
     bot.send_message(message.chat.id,
@@ -74,9 +95,13 @@ def welcome(message):
                      parse_mode='html', reply_markup=markup)
 
 
-# Действия при /help
 @bot.message_handler(commands=['help'])
 def help(message):
+    """
+        Действия при /help
+        :param message: /help
+        :return:
+    """
     bot.send_message(message.chat.id, 'Если хотите узнать ответ, задайте вопрос,\n'
                                       'если хотите посчитать сколько выпить, напишите Калькулятор,\n'
                                       'если хотите подписаться, напишите Подписаться,\n'
@@ -84,16 +109,24 @@ def help(message):
                                       'если хотите узнать погоду, напишите Узнать погоду.')
 
 
-# Тайная функция)
 @bot.message_handler(commands=['secret'])
 def random_pos(message):
+    """
+    Тайная функция)
+    :param message: /secret
+    :return:
+    """
     data = requests.get(f"{globals.PICTURES}{random.randint(0, 100)}.jpg")
     bot.send_photo(message.chat.id, data.content)
 
 
-# Действия при любом другом сообщении
 @bot.message_handler(content_types=['text'])
 def processing(message):
+    """
+    Действия при любом другом сообщении
+    :param message: Сообщение для обработки
+    :return:
+    """
     if message.text == 'Калькулятор':
         # Вызов калькулятора опьянения
         bot.send_message(message.chat.id, 'Введите пол(м/ж), вес, рост, градус и мл(цифрами и через пробелы)')

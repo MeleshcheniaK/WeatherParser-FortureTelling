@@ -5,8 +5,12 @@ import requests
 import globals
 
 
-# Получение прогноза 'На сегодня'
 def current_forecast(city_name):
+    """
+    Получение прогноза 'На сегодня'
+    :param city_name: Название города
+    :return:
+    """
     res = requests.get(f"{globals.WEATHER_SITE}weather",
                        params={'q': city_name, 'units': 'metric', 'lang': 'ru', 'APPID': globals.APPID})
     data = res.json()
@@ -25,8 +29,12 @@ def current_forecast(city_name):
     return current_weather
 
 
-# Получение прогноза 'На 5 дней'
 def future_forecast(city_name):
+    """
+        Получение прогноза 'На 5 дней'
+        :param city_name: Название города
+        :return:
+    """
     res = requests.get(f"{globals.WEATHER_SITE}forecast",
                        params={'q': city_name, 'units': 'metric', 'lang': 'ru', 'APPID': globals.APPID})
     data = res.json()

@@ -39,4 +39,4 @@ DATA_FORMAT = '%Y-%m-%d %H:%M:%S'
 INFO_SIZE = 5
 
 # Код ошибки доступа
-SECURITY_ERROR = 200
+SECURITY_ERROR_TEXT = "Ошибка проверки безопасности!"
