@@ -19,7 +19,14 @@ def calculate_alco(data):
         return 'Неправильный ввод'
     gender, weight, height, degree, ml = info
     if gender not in gender_coefficient:
-        return 'Неправильный ввод'
+        return 'Неправильный пол'
+    if int(weight) < 40 or int(weight) > 150:
+        return 'Неправильный вес'
+    if int(height) < 120 or int(height) > 200:
+        return 'Неправильный рост'
+    if int(degree) < 0 or int(degree) > 100:
+        return 'Неправильный градус'
+
     params = {'action': 'drink_count', 'nonce': 'bf9b9cc3a3',
               'data': f"gender={gender_coefficient[gender]}&weight={weight}&height={height}&drink1={degree}"
                       f"&amount1={ml}&drink2=0&amount2=0&drink3=0&amount3=0&gstr=3", 'dataType': 'json'}
