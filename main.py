@@ -34,10 +34,7 @@ def updating_main_markup(message):
     else:
         # Главное меню
         button_1 = types.KeyboardButton('Узнать погоду')
-        button_2_text = 'Подписаться'
-
-        if str(message.chat.id) in users.dict:
-            button_2_text = 'Отписаться'
+        button_2_text = 'Отписаться' if str(message.chat.id) in users.dict else 'Подписаться'
 
         button_2 = types.KeyboardButton(button_2_text)
         button_3 = types.KeyboardButton('Калькулятор')
